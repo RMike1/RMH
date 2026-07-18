@@ -16,6 +16,9 @@
 	***********************************
 	* Modify access right hereafter	  *
 	***********************************
+    ***********************************
+	* Modify access right hereafter	  *
+	***********************************
  -->
 <%
 	String accessright="training";
