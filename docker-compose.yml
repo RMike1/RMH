@@ -1,0 +1,46 @@
+services:
+  db:
+    image: mysql:5.7
+    platform: linux/amd64
+    container_name: openclinic-db
+    ports:
+      - "13306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: openclinic
+      MYSQL_PASSWORD: openclinic_local
+    volumes:
+      - openclinic_mysql_data:/var/lib/mysql
+      - ./docker/mysql-init:/docker-entrypoint-initdb.d
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --max_allowed_packet=512M
+      - --max_connections=300
+      - --lower_case_table_names=1
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  tomcat:
+    image: tomcat:8.5-jdk8
+    platform: linux/amd64
+    container_name: openclinic-tomcat
+    ports:
+      - "10088:10088"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./web:/usr/local/tomcat/webapps/openclinic
+      - ./docker/tomcat/server.xml:/usr/local/tomcat/conf/server.xml
+      - ./docker/tomcat/db.cfg:/usr/local/tomcat/conf/db.cfg
+      - ./web/WEB-INF/lib/primrose.jar:/usr/local/tomcat/lib/primrose.jar:ro
+      - ./web/WEB-INF/lib/mysql-connector-java-5.1.10-bin.jar:/usr/local/tomcat/lib/mysql-connector-java-5.1.10-bin.jar:ro
+    environment:
+      CATALINA_OPTS: "-Xms512m -Xmx2g"
+
+volumes:
+  openclinic_mysql_data:
