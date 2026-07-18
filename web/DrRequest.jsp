@@ -258,7 +258,6 @@
                                 <option value="VCT">VCT</option>
                                 <option value="OPD">OPD</option>
                                 <option value="MUHABURA">MUHABURA</option>
-                                <option value="MUHABURA">GYNECO</option>
                                 <option value="Other">Other</option>
                             </select>
                             
