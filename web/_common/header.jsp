@@ -11,6 +11,7 @@
       var target;
       if(lastevt.target){
         target = lastevt.target;
+		console.log(target.id);
       }
       else{
         target = lastevt.srcElement;
