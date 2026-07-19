@@ -1,10 +1,3 @@
-#!/usr/bin/env bash
-# Watch src/**/*.java and compile only the changed file (JDK 8 via compile-java.sh).
-# Safe for OpenClinic: does not wipe be/.
-#
-# Usage:
-#   ./docker/watch-java.sh           # compile on save
-#   ./docker/watch-java.sh --restart # also restart Tomcat after compile
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
