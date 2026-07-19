@@ -86,6 +86,21 @@ docker compose restart tomcat
 ./docker/watch-java.sh --restart   # + restart Tomcat each time
 ```
 
+### Java → JSP training test
+
+```bash
+docker compose up -d   # both db + tomcat must be running
+./docker/compile-java.sh src/training/Hello.java src/training/HelloServlet.java
+docker compose restart tomcat
+```
+
+Open either:
+
+- http://localhost:10088/openclinic/trainingHello  (servlet → JSP, no OC filters)
+- http://localhost:10088/openclinic/test1.jsp     (direct JSP; needs DB up)
+
+Compile targets **Java 8**. Prefer Temurin 8; JDK 11 with `--release 8` also works. Do **not** use JDK 25 for `.class` files Tomcat 8 loads.
+
 Do **not** turn on IDE Java autobuild into `WEB-INF/classes` (it can wipe `be/`).
 
 Apple Silicon: first start is slower.  
