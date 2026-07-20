@@ -275,7 +275,8 @@ if(new java.util.Date().before(new SimpleDateFormat("dd/MM/yyyy").parse(be.openc
         	<img src="_img/logo_gmao.jpg" border="0">
         <% } else {
             session.setAttribute("edition", "openclinic");%>
-        	<img src="_img/logo.jpg" border="0">
+        	 <img src="_img/logo.jpg" border="0"> 
+            <!--<img src="_img/Logo_MHS_Cropped.png" border="0" width="70px" height="70px">-->
         <% }%>
     </div>
     <%
