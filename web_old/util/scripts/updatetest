@@ -1,6 +1,0 @@
-cd /root
-rm -rf web
-tar zxf web.tar.gz
-/bin/cp -rf web/* /var/tomcat/webapps/openclinictest
-./restarttmct
-
