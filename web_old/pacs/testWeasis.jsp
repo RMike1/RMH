@@ -1,3 +1,0 @@
-{
-	"started" : "<%=session.getAttribute("wadoQueryStarted")%>"
-}
