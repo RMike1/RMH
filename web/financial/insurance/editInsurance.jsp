@@ -47,7 +47,8 @@
     String sEditInsuranceDefault = checkString(request.getParameter("EditInsuranceDefault"));
     String sEditInsuranceMemberCategory = checkString(request.getParameter("EditInsuranceMemberCategory"));
     String sEditInsuranceFamilyCode = checkString(request.getParameter("EditInsuranceFamilyCode"));
-	if(sEditInsuranceDefault.length()==0){
+	String sEditInsuranceValide = checkString(request.getParameter("EditInsuranceValide"));
+    if(sEditInsuranceDefault.length()==0){
 		sEditInsuranceDefault = "0";
 	}
 	
@@ -114,6 +115,7 @@
 	        insurance.setDefaultInsurance(Integer.parseInt(sEditInsuranceDefault));
 	        insurance.setMembercategory(sEditInsuranceMemberCategory);
 	        insurance.setFamilycode(sEditInsuranceFamilyCode);
+            insurance.setInsuranceValide(sEditInsuranceValide);
 	        insurance.store();
 	        if(MedwanQuery.getInstance().getConfigInt("copyInsuranceNumberToImmatNew",0)==1){
 		        if(checkString(insurance.getInsuranceNr()).length()>0 && !insurance.getInsuranceNr().equalsIgnoreCase(activePatient.getID("immatnew"))){
@@ -180,7 +182,8 @@
         sEditInsuranceDefault = insurance.getDefaultInsurance()+"";
         sEditInsuranceMemberCategory = ScreenHelper.checkString(insurance.getMembercategory());
         sEditInsuranceFamilyCode = ScreenHelper.checkString(insurance.getFamilycode());
-    }
+        sEditInsuranceValide = ScreenHelper.checkString(insurance.getInsuranceValide());
+    
     else if(sEditInsurarUID.length()>0 && sEditInsuranceCategoryLetter.length() > 0){
         InsuranceCategory insuranceCategory = InsuranceCategory.get(sEditInsurarUID,sEditInsuranceCategoryLetter);
         if(insuranceCategory.getLabel().length() > 0){
@@ -263,6 +266,16 @@
             	</select>
             </td>
         </tr>
+        <%-- Valide--%>
+        <tr>
+            <td class="admin"><%=getTran(request,"insurance","insurancevalide",sWebLanguage)%></td>
+            <td class="admin2">
+            	<select class="text" name="EditInsuranceValide" id="EditInsuranceValide">
+            		<option></option>
+            		<%=ScreenHelper.writeSelect(request,"insurancevalide", sEditInsuranceValide, sWebLanguage) %>
+            	</select>
+            </td>
+        </tr>
  <%
 	}
  %>
@@ -309,13 +322,13 @@
 								//Check if the insurer needs approval
 								boolean bCanAdd=false;
 								Insurar insr = Insurar.get(key);
-								if(insr.getInactive()>0){
+								if(insr==null || insr.getInactive()>0){
 									continue;
 								}
-								if(insr!=null && (insr.getNeedsApproval()==0 || activeUser.getAccessRight("financial.insurerapproval.select"))){
+								if(insr.getNeedsApproval()==0 || activeUser.getAccessRight("financial.insurerapproval.select")){
 									bCanAdd=true;
 								}
-								if(insr!=null && insr.getNeedsApproval()==1 && !activeUser.getAccessRight("financial.insurerapproval.select")){
+								if(insr.getNeedsApproval()==1 && !activeUser.getAccessRight("financial.insurerapproval.select")){
 									bApprovalNeeded=true;
 								}
 								if(bCanAdd || sEditExtraInsurarUID.equalsIgnoreCase(key)){
@@ -355,10 +368,13 @@
 								//Check if the insurer needs approval
 								boolean bCanAdd=false;
 								Insurar insr = Insurar.get(key);
-								if(insr!=null && (insr.getNeedsApproval()==0 || activeUser.getAccessRight("financial.insurerapproval.select"))){
+								if(insr==null || insr.getInactive()>0){
+									continue;
+								}
+								if(insr.getNeedsApproval()==0 || activeUser.getAccessRight("financial.insurerapproval.select")){
 									bCanAdd=true;
 								}
-								if(insr!=null && insr.getNeedsApproval()==1 && !activeUser.getAccessRight("financial.insurerapproval.select")){
+								if(insr.getNeedsApproval()==1 && !activeUser.getAccessRight("financial.insurerapproval.select")){
 									bApprovalNeeded=true;
 								}
 								if(bCanAdd || sEditExtraInsurarUID2.equalsIgnoreCase(key)){
@@ -413,7 +429,7 @@
                 		out.println(writeDateField("EditInsuranceStop","EditInsuranceForm",sEditInsuranceStop,sWebLanguage));
                 	}
                 	else{
-                		out.print(sEditInsuranceStop);
+                		out.print(sEditInsuranceStop+"<input type='hidden' name='EditInsuranceStop' id='EditInsuranceStop' value='"+sEditInsuranceStop+"'/>");
                 	}
                 %>
             </td>

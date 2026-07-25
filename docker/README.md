@@ -1,9 +1,11 @@
 # OpenClinic — local Docker
 
-| | Version | Port |
-|--|---------|------|
-| MySQL | 5.7 | **13306** |
+
+|              | Version | Port      |
+| ------------ | ------- | --------- |
+| MySQL        | 5.7     | **13306** |
 | Tomcat + JDK | 8.5 / 8 | **10088** |
+
 
 Need: **Docker Desktop** running + SQL backup folder (4 `.sql` files).
 
@@ -16,7 +18,7 @@ cd /path/to/this-repo
 
 # 1) Start
 docker compose up -d
-docker compose ps          # db = healthy
+docker compose ps  java         # db = healthy
 
 # 2) Import backup (unzip first if .zip) — also sets local URLs + project
 ./docker/import-backup.sh ~/Downloads/backup_YYYYMMDD_HHMM
@@ -25,29 +27,39 @@ docker compose ps          # db = healthy
 docker compose restart tomcat
 ```
 
-Open: **http://localhost:10088/openclinic/**  
+Open: **[http://localhost:10088/openclinic/](http://localhost:10088/openclinic/)**  
 Logout/login once if you were already logged in.
 
 ---
 
+
+
 ## Every day
 
-| Action | Command |
-|--------|---------|
-| Start | `docker compose up -d` |
-| Stop | `docker compose down` |
-| Logs | `docker compose logs -f tomcat` |
+
+| Action              | Command                                                            |
+| ------------------- | ------------------------------------------------------------------ |
+| Start               | `docker compose up -d`                                             |
+| Stop                | `docker compose down`                                              |
+| Logs                | `docker compose logs -f tomcat`                                    |
 | Wipe DB + re-import | `docker compose down -v` → `up -d` → import again → restart tomcat |
+
 
 ---
 
+
+
 ## Access
 
-| | |
-|--|--|
-| App | http://localhost:10088/openclinic/ |
-| MySQL | `127.0.0.1:13306` — `openclinic` / `openclinic_local` |
-| Root | `root` / `root` |
+
+|       |                                                                          |
+| ----- | ------------------------------------------------------------------------ |
+| App   | [http://localhost:10088/openclinic/](http://localhost:10088/openclinic/) |
+| MySQL | `127.0.0.1:13306` — `openclinic` / `openclinic_local`                    |
+| Root  | `root` / `root`                                                          |
+
+
+
 
 ### Enter the database
 
@@ -74,6 +86,8 @@ GUI (TablePlus / DBeaver / Workbench): host `127.0.0.1`, port `13306`, user `roo
 
 ---
 
+
+
 ## Optional
 
 ```bash
@@ -86,6 +100,8 @@ docker compose restart tomcat
 ./docker/watch-java.sh --restart   # + restart Tomcat each time
 ```
 
+
+
 ### Java → JSP training test
 
 ```bash
@@ -96,8 +112,8 @@ docker compose restart tomcat
 
 Open either:
 
-- http://localhost:10088/openclinic/trainingHello  (servlet → JSP, no OC filters)
-- http://localhost:10088/openclinic/test1.jsp     (direct JSP; needs DB up)
+- [http://localhost:10088/openclinic/trainingHello](http://localhost:10088/openclinic/trainingHello)  (servlet → JSP, no OC filters)
+- [http://localhost:10088/openclinic/test1.jsp](http://localhost:10088/openclinic/test1.jsp)     (direct JSP; needs DB up)
 
 Compile targets **Java 8**. Prefer Temurin 8; JDK 11 with `--release 8` also works. Do **not** use JDK 25 for `.class` files Tomcat 8 loads.
 
