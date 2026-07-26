@@ -1,9 +1,11 @@
 # OC Installation Guide
 
-| | Version | Port |
-|--|---------|------|
-| MySQL | 5.7 | **13306** |
+
+|              | Version | Port      |
+| ------------ | ------- | --------- |
+| MySQL        | 5.7     | **13306** |
 | Tomcat + JDK | 8.5 / 8 | **10088** |
+
 
 Need: **Docker Desktop** running + SQL backup folder (4 `.sql` files).
 
@@ -25,29 +27,39 @@ docker compose ps
 docker compose restart tomcat
 ```
 
-Open: **http://localhost:10088/openclinic/**  
+Open: **[http://localhost:10088/openclinic/](http://localhost:10088/openclinic/)**  
 Logout/login once if you were already logged in.
 
 ---
 
+
+
 ## Every day
 
-| Action | Command |
-|--------|---------|
-| Start | `docker compose up -d` |
-| Stop | `docker compose down` |
-| Logs | `docker compose logs -f tomcat` |
+
+| Action              | Command                                                            |
+| ------------------- | ------------------------------------------------------------------ |
+| Start               | `docker compose up -d`                                             |
+| Stop                | `docker compose down`                                              |
+| Logs                | `docker compose logs -f tomcat`                                    |
 | Wipe DB + re-import | `docker compose down -v` → `up -d` → import again → restart tomcat |
+
 
 ---
 
+
+
 ## Access
 
-| | |
-|--|--|
-| App | http://localhost:10088/openclinic/ |
-| MySQL | `127.0.0.1:13306` — `openclinic` / `openclinic_local` |
-| Root | `root` / `root` |
+
+|       |                                                                          |
+| ----- | ------------------------------------------------------------------------ |
+| App   | [http://localhost:10088/openclinic/](http://localhost:10088/openclinic/) |
+| MySQL | `127.0.0.1:13306` — `openclinic` / `openclinic_local`                    |
+| Root  | `root` / `root`                                                          |
+
+
+
 
 ### Enter the database
 
@@ -63,6 +75,8 @@ mysql -h 127.0.0.1 -P 13306 -uroot -proot
 
 
 ---
+
+
 
 ## Optional
 

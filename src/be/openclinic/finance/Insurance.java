@@ -44,7 +44,9 @@ public class Insurance extends OC_Object {
     private int defaultInsurance;
     private String membercategory;
     private String familycode;
+    private String InsuranceValide;
 
+    
     public String getMembercategory() {
 		return membercategory;
 	}
@@ -61,6 +63,15 @@ public class Insurance extends OC_Object {
 	public void setFamilycode(String familycode) {
 		this.familycode = familycode;
 	}
+
+	public String getInsuranceValide()
+     {
+		return InsuranceValide;
+	}
+	public void setInsuranceValide(String InsuranceValide) {
+		this.InsuranceValide = InsuranceValide;
+	}
+
 
 	public int getDefaultInsurance(){
 		return defaultInsurance;
@@ -136,6 +147,7 @@ public class Insurance extends OC_Object {
 				catch(ParseException e){
 					e.printStackTrace();
 				}
+
 				
 	    		if(dValidUntil.after(new java.util.Date())){
 	    			// Still valid!
@@ -444,7 +456,7 @@ public class Insurance extends OC_Object {
                         insurance.setDefaultInsurance(rs.getInt("OC_INSURANCE_DEFAULT"));
                         insurance.setMembercategory(ScreenHelper.checkString(rs.getString("OC_INSURANCE_MEMBERCATEGORY")));
                         insurance.setFamilycode(ScreenHelper.checkString(rs.getString("OC_INSURANCE_FAMILYCODE")));
-
+                        insurance.setInsuranceValide(ScreenHelper.checkString(rs.getString("insurancevalide")));
                         if(insurance.getInsuranceCategory()!=null && insurance.getInsuranceCategory().getPatientShare()!=null && insurance.getInsuranceCategory().getPatientShare().length()>0){
                         	insurance.setPatientShare(Integer.parseInt(insurance.getInsuranceCategory().getPatientShare()));
                         }
@@ -521,6 +533,7 @@ public class Insurance extends OC_Object {
                                 " OC_INSURANCE_DEFAULT,"+
                                 " OC_INSURANCE_MEMBERCATEGORY,"+
                                 " OC_INSURANCE_FAMILYCODE"+
+                        
                                 ")"+
 
                               " SELECT OC_INSURANCE_SERVERID,"+
@@ -546,6 +559,7 @@ public class Insurance extends OC_Object {
                                      " OC_INSURANCE_DEFAULT,"+
                                      " OC_INSURANCE_MEMBERCATEGORY,"+
                                      " OC_INSURANCE_FAMILYCODE"+
+                                     
                               " FROM OC_INSURANCES "+
                               " WHERE OC_INSURANCE_SERVERID = ?"+
                               " AND OC_INSURANCE_OBJECTID = ?";
@@ -594,9 +608,10 @@ public class Insurance extends OC_Object {
                                       " OC_INSURANCE_EXTRAINSURARUID2,"+
                                       " OC_INSURANCE_DEFAULT,"+
                                       " OC_INSURANCE_MEMBERCATEGORY,"+
-                                      " OC_INSURANCE_FAMILYCODE"+
+                                      " OC_INSURANCE_FAMILYCODE,"+
+                                      " insurancevalide"+
                                       ") "+
-                          " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                          " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                 ps = oc_conn.prepareStatement(sInsert);
                 ps.setInt(1,Integer.parseInt(ids[0]));
@@ -630,6 +645,7 @@ public class Insurance extends OC_Object {
                 ps.setInt(21, this.getDefaultInsurance());
                 ps.setString(22, this.getMembercategory());
                 ps.setString(23, this.getFamilycode());
+                ps.setString(24, this.getInsuranceValide());
                 ps.executeUpdate();
                 ps.close();
                 
@@ -715,6 +731,7 @@ public class Insurance extends OC_Object {
                 insurance.setDefaultInsurance(rs.getInt("OC_INSURANCE_DEFAULT"));
                 insurance.setMembercategory(ScreenHelper.checkString(rs.getString("OC_INSURANCE_MEMBERCATEGORY")));
                 insurance.setFamilycode(ScreenHelper.checkString(rs.getString("OC_INSURANCE_FAMILYCODE")));
+                insurance.setInsuranceValide(ScreenHelper.checkString(rs.getString("insurancevalide")));
 
                 vInsurance.addElement(insurance);
             }
@@ -794,7 +811,7 @@ public class Insurance extends OC_Object {
 				insurance.setDefaultInsurance(rs.getInt("OC_INSURANCE_DEFAULT"));
 				insurance.setMembercategory(ScreenHelper.checkString(rs.getString("OC_INSURANCE_MEMBERCATEGORY")));
 				insurance.setFamilycode(ScreenHelper.checkString(rs.getString("OC_INSURANCE_FAMILYCODE")));
-				
+				insurance.setInsuranceValide(ScreenHelper.checkString(rs.getString("insurancevalide")));
 				vInsurance.addElement(insurance);
 			}
 		}catch(Exception e){
@@ -937,6 +954,7 @@ public class Insurance extends OC_Object {
                 insurance.setDefaultInsurance(rs.getInt("OC_INSURANCE_DEFAULT"));
                 insurance.setMembercategory(ScreenHelper.checkString(rs.getString("OC_INSURANCE_MEMBERCATEGORY")));
                 insurance.setFamilycode(ScreenHelper.checkString(rs.getString("OC_INSURANCE_FAMILYCODE")));
+                insurance.setInsuranceValide(ScreenHelper.checkString(rs.getString("insurancevalide")));
 
                 if(insurance.getInsuranceCategory()!=null && insurance.getInsuranceCategory().getPatientShare()!=null && insurance.getInsuranceCategory().getPatientShare().length()>0){
                 	insurance.setPatientShare(Integer.parseInt(insurance.getInsuranceCategory().getPatientShare()));
@@ -1014,6 +1032,7 @@ public class Insurance extends OC_Object {
                 insurance.setDefaultInsurance(rs.getInt("OC_INSURANCE_DEFAULT"));
                 insurance.setMembercategory(ScreenHelper.checkString(rs.getString("OC_INSURANCE_MEMBERCATEGORY")));
                 insurance.setFamilycode(ScreenHelper.checkString(rs.getString("OC_INSURANCE_FAMILYCODE")));
+                insurance.setInsuranceValide(ScreenHelper.checkString(rs.getString("insurancevalide")));
 
                 vInsurances.addElement(insurance);
             }
@@ -1167,7 +1186,7 @@ public class Insurance extends OC_Object {
                 insurance.setDefaultInsurance(rs.getInt("OC_INSURANCE_DEFAULT"));
                 insurance.setMembercategory(ScreenHelper.checkString(rs.getString("OC_INSURANCE_MEMBERCATEGORY")));
                 insurance.setFamilycode(ScreenHelper.checkString(rs.getString("OC_INSURANCE_FAMILYCODE")));
-                
+                insurance.setInsuranceValide(ScreenHelper.checkString(rs.getString("insurancevalide")));
                 if(insurance.isAuthorized()){
                 	break;
                 }
@@ -1215,6 +1234,7 @@ public class Insurance extends OC_Object {
             ps.setDate(3,new java.sql.Date(date.getTime())); 
             rs = ps.executeQuery();
 
+
             while(rs.next()){
                 insurance = new Insurance();
                 insurance.setUid(ScreenHelper.checkString(rs.getString("OC_INSURANCE_SERVERID"))+"."+ScreenHelper.checkString(rs.getString("OC_INSURANCE_OBJECTID")));
@@ -1241,7 +1261,7 @@ public class Insurance extends OC_Object {
                 insurance.setDefaultInsurance(rs.getInt("OC_INSURANCE_DEFAULT"));
                 insurance.setMembercategory(ScreenHelper.checkString(rs.getString("OC_INSURANCE_MEMBERCATEGORY")));
                 insurance.setFamilycode(ScreenHelper.checkString(rs.getString("OC_INSURANCE_FAMILYCODE")));
-                
+                insurance.setInsuranceValide(ScreenHelper.checkString(rs.getString("insurancevalide")));
                 if(insurance.isAuthorized()){
                 	break;
                 }
