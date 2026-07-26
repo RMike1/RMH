@@ -49,7 +49,7 @@ if ! docker info >/dev/null 2>&1; then
 fi
 
 echo "==> Compiling inside tomcat:8.5-jdk8 (no host JDK needed)"
-docker run --rm \
+MSYS_NO_PATHCONV=1 docker run --rm \
   --platform linux/amd64 \
   -v "$ROOT:/work" \
   -w /work \
