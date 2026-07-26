@@ -584,7 +584,6 @@ public class AdminPerson extends OC_Object{
         }
         return adminPerson;
     }
- //
     //--- GET ADMIN PERSON ------------------------------------------------------------------------
     public static AdminPerson getAdminPerson(String sPersonID){
     	AdminPerson adminPerson=null;
