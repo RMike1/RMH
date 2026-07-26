@@ -43,13 +43,16 @@ if ! command -v docker >/dev/null 2>&1; then
   exit 1
 fi
 
+
 if ! docker info >/dev/null 2>&1; then
   echo "Docker daemon is not reachable. Start Docker Desktop and retry."
   exit 1
 fi
 
+
+
 echo "==> Compiling inside tomcat:8.5-jdk8 (no host JDK needed)"
-docker run --rm \
+MSYS_NO_PATHCONV=1 docker run --rm \
   --platform linux/amd64 \
   -v "$ROOT:/work" \
   -w /work \
