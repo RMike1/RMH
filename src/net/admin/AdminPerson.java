@@ -584,11 +584,9 @@ public class AdminPerson extends OC_Object{
         }
         return adminPerson;
     }
-
     //--- GET ADMIN PERSON ------------------------------------------------------------------------
     public static AdminPerson getAdminPerson(String sPersonID){
     	AdminPerson adminPerson=null;
-    	
     	try {
 	        Connection conn = MedwanQuery.getInstance().getAdminConnection();
 	        adminPerson= AdminPerson.getAdminPerson(conn,sPersonID);
@@ -1338,8 +1336,8 @@ public class AdminPerson extends OC_Object{
             sSearchname = sLastname.toUpperCase().trim()+","+sFirstname.toUpperCase().trim();
             sSearchname = ScreenHelper.normalizeSpecialCharacters(sSearchname);
             
-            firstname = firstname.replaceAll("'","´");
-            lastname = lastname.replaceAll("'","´");
+            firstname = firstname.replaceAll("'","ï¿½");
+            lastname = lastname.replaceAll("'","ï¿½");
             
             //*** INSERT ***
             if ((bReturn)&&(sPersonID.trim().length()==0)) {
@@ -2023,7 +2021,7 @@ public class AdminPerson extends OC_Object{
         if (!compareField(person,this,"comment4")) return false;
         if (!compareField(person,this,"comment5")) return false;
 
-        //Daarna de privégegevens
+        //Daarna de privï¿½gegevens
         AdminPrivateContact personPrivate=person.getActivePrivate();
         AdminPrivateContact thisPrivate=this.getActivePrivate();
         if(!compareField(personPrivate,thisPrivate,"address")) return false;

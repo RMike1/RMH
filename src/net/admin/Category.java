@@ -6,7 +6,6 @@ import be.mxs.common.util.system.ScreenHelper;
 import java.util.*;
 import java.sql.*;
 import java.sql.Date;
-
 public class Category {
     public String code="";
     public String parentcode="";

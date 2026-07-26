@@ -1,4 +1,11 @@
+#!/usr/bin/env bash
 set -euo pipefail
+
+# Prevent Git Bash (MSYS) on Windows from mangling absolute paths
+# like /work into C:/Program Files/Git/work when passed to docker.
+# Harmless no-op on macOS/Linux.
+export MSYS_NO_PATHCONV=1
+export MSYS2_ARG_CONV_EXCL="*"
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"

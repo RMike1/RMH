@@ -24,6 +24,7 @@
 	       sUnitText    = checkString(request.getParameter("findUnitText")),
 	       sArchiveFileCode = checkString(request.getParameter("findArchiveFileCode")),
    	       sPersonID    = checkString(request.getParameter("findPersonID")),
+          sUserID      = "",
    	       sSector    = checkString(request.getParameter("findSector")),
 	       sDistrict    = checkString(request.getParameter("findDistrict"));
     String sAction = checkString(request.getParameter("findSearchButtonClick"));
@@ -54,6 +55,7 @@
         sCity = checkString(activePatient.getActivePrivate().city).trim();
         sSector = checkString(activePatient.getActivePrivate().sector).trim();
         sPersonID = activePatient.personid;
+
 
         Service as = ScreenHelper.getActiveDivision(activePatient.personid);
         if(as!=null) sUnit = as.code;
@@ -170,6 +172,15 @@
                 <input type="hidden" name="Action" value="">
                 <input type="hidden" name="findUnit" value="<%=sUnit%>">
             </td>
+            <%
+                if(activePatient!=null && activePatient.personid!=null){
+                  String sTmpUserID = User.getUseridByPersonid(sPersonID);
+                  sUserID = (sTmpUserID != null && sTmpUserID.length() > 0) ? sTmpUserID : "";
+                }
+            %>
+            <td align="right" nowrap><%=getTran(request,"Web", "userid", sWebLanguage)%>&nbsp;
+              <input class='text' type='text' name='findUserID' value="<%=sUserID%>" size='17' readonly>
+          </td>
             <%-- BUTTONS --%>
             <%
 
@@ -314,6 +325,7 @@ function resizeSearchFields(){
   $("SF").findimmatnew.style.width = bigSize+"px";
   $("SF").findArchiveFileCode.style.width = smallSize+"px";
   $("SF").findPersonID.style.width = smallSize+"px";
+  $("SF").findUserID.style.width = smallSize+"px";
   $("SF").findDistrict.style.width = smallSize+"px";
 
   $("SF").findUnitText.style.width = bigbigSize+"px";
@@ -353,6 +365,7 @@ function doSPatient(poseQuestion){
       document.getElementById("SF").findimmatnew.value.length > 0 ||
       document.getElementById("SF").findArchiveFileCode.value.length > 0 ||
       document.getElementById("SF").findPersonID.value.length > 0 ||
+      document.getElementById("SF").findUserID.value.length > 0 ||
       (document.getElementById("SF").findDistrict.selectedIndex && document.getElementById("SF").findDistrict.selectedIndex>-1) ||
       (document.getElementById("SF").findSector.selectedIndex && document.getElementById("SF").findSector.selectedIndex>-1) ||
       document.getElementById("SF").findUnitText.value.length > 0) {
@@ -393,6 +406,7 @@ function clearPatient(){
     document.getElementById("SF").findUnit.value = "";
     document.getElementById("SF").findUnitText.value = "";
     document.getElementById("SF").findPersonID.value = "";
+    document.getElementById("SF").findUserID.value = "";
     if(document.getElementById("SF").findDistrict.selectedIndex) document.getElementById("SF").findDistrict.selectedIndex = -1;
     if(document.getElementById("SF").findSector.selectedIndex) document.getElementById("SF").findSector.selectedIndex = -1;
     document.getElementById("SF").findUnitText.style.backgroundColor = "white";
