@@ -44,7 +44,28 @@
 	}
 	
 	void addParameters(HttpServletRequest request,Report report, Map parameters, String name, String language){
-		parameters.put(name.replaceAll("fieldname_", ""),checkString(request.getParameter(name)));
+		if(getFieldType(report, name).equalsIgnoreCase("checkbox")){
+			String[] values = request.getParameterValues(name);
+			String joined = "";
+			if(values!=null){
+				for(int i=0;i<values.length;i++){
+					String value = checkString(values[i]);
+					if(value.length()>0){
+						if(joined.length()>0){
+							joined+=",";
+						}
+						joined+=value;
+					}
+				}
+			}
+			else{
+				joined = checkString(request.getParameter(name));
+			}
+			parameters.put(name.replaceAll("fieldname_", ""),joined);
+		}
+		else{
+			parameters.put(name.replaceAll("fieldname_", ""),checkString(request.getParameter(name)));
+		}
 		if(getFieldType(report, name).equalsIgnoreCase("service")){
 			Service service = Service.getService(checkString(request.getParameter(name)));	
 			if(service!=null){
