@@ -54,6 +54,10 @@
 							else if(field.elementText("type").equalsIgnoreCase("select")){
 								out.println("<td class='admin2'><select class='text' name='fieldname_"+field.elementText("name")+"'>"+ScreenHelper.writeSelect(request,field.elementText("modifier"), "", sWebLanguage)+"</select></td>");
 							}
+							else if(field.elementText("type").equalsIgnoreCase("checkbox")){
+								out.println("<td class='admin2'><input type='hidden' id='fieldname_"+field.elementText("name")+"' name='fieldname_"+field.elementText("name")+"' value=''>");
+								out.println(ScreenHelper.writeCheckBoxes(request,field.elementText("modifier"),"cbgroup_"+field.elementText("name"),"",sWebLanguage,true)+"</td>");
+							}
 							else if(field.elementText("type").equalsIgnoreCase("service")){
 				            	String sServiceUid = checkString((String)session.getAttribute("activeservice"));
 				            	if(sServiceUid.length()==0){   	
@@ -99,8 +103,30 @@
 	    document.getElementsByName(patientNameField)[0].focus();
 	}
 	function executeReport(){
-		var parameters="personid=<%=activePatient==null?"":activePatient.personid%>&reportuid="+document.getElementById("selectedreport").value+"&format="+reportForm.reportformat.value+"&language=<%=sWebLanguage%>";
 		var elements = document.all;
+		var checkboxGroups = {};
+		for(n=0;n<elements.length;n++){
+			if(elements[n].name && elements[n].name.indexOf("cbgroup_")==0 && elements[n].type=="checkbox"){
+				var paramName = elements[n].name.substring("cbgroup_".length);
+				var dotPos = paramName.indexOf(".");
+				if(dotPos>-1){
+					paramName = paramName.substring(0,dotPos);
+				}
+				if(!checkboxGroups[paramName]){
+					checkboxGroups[paramName] = [];
+				}
+				if(elements[n].checked){
+					checkboxGroups[paramName].push(elements[n].value);
+				}
+			}
+		}
+		for(var paramName in checkboxGroups){
+			var hidden = document.getElementById("fieldname_"+paramName);
+			if(hidden){
+				hidden.value = checkboxGroups[paramName].join(",");
+			}
+		}
+		var parameters="personid=<%=activePatient==null?"":activePatient.personid%>&reportuid="+document.getElementById("selectedreport").value+"&format="+reportForm.reportformat.value+"&language=<%=sWebLanguage%>";
 		for(n=0;n<elements.length;n++){
 			if(elements[n].name && elements[n].name.indexOf("fieldname_")>-1){
 				parameters+="&"+elements[n].name+"="+elements[n].value.replace("%","%25");
