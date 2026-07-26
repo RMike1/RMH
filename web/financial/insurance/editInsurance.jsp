@@ -183,7 +183,7 @@
         sEditInsuranceMemberCategory = ScreenHelper.checkString(insurance.getMembercategory());
         sEditInsuranceFamilyCode = ScreenHelper.checkString(insurance.getFamilycode());
         sEditInsuranceValide = ScreenHelper.checkString(insurance.getInsuranceValide());
-    
+    }
     else if(sEditInsurarUID.length()>0 && sEditInsuranceCategoryLetter.length() > 0){
         InsuranceCategory insuranceCategory = InsuranceCategory.get(sEditInsurarUID,sEditInsuranceCategoryLetter);
         if(insuranceCategory.getLabel().length() > 0){
