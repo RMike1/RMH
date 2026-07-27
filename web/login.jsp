@@ -276,7 +276,7 @@ if(new java.util.Date().before(new SimpleDateFormat("dd/MM/yyyy").parse(be.openc
         <% } else {
             session.setAttribute("edition", "openclinic");%>
         	<!-- <img src="_img/logo.jpg" border="0"> -->
-            <img src="_img/Logo_MHS_Cropped.png" border="0" style="display:block; >
+            <img src="_img/Logo_MHS_Cropped.png" border="0" style="display:block;">
         <% }%>
     </div>
     <%
@@ -325,15 +325,15 @@ if(new java.util.Date().before(new SimpleDateFormat("dd/MM/yyyy").parse(be.openc
         <center><%=MedwanQuery.getInstance().getConfigString("openclinicedition", "GA Open Source Edition") %> by:
         <% if (MedwanQuery.getInstance().getConfigString("mxsref", "rw").equalsIgnoreCase("rw")){ %>
         <img src="_img/flags/rwandaflag.jpg" height="15px" width="30px" alt="Rwanda"/>
-        <a href="http://mxs.rwandamed.org" target="_new"><b>The Open-IT Group Ltd</b></a>
-        <BR/> PO Box 3242 - Kigali Rwanda Tel +250 07884 32 435 -
-        <a href="mailto:mxs@rwandamed.org">openit@rwandamed.org</a>
+        <a href="https://rwandamilitaryhospital.rw/" target="_new"><b>RMTH</b></a>
+        <BR/> PO Box 3377 - Kigali Rwanda Tel 4060 
+        <a href="mailto:info@rmh.rw">info@rmh.rw</a>
         <% } else if (MedwanQuery.getInstance().getConfigString("mxsref", "rw").equalsIgnoreCase("bi")){ 
         	if(MedwanQuery.getInstance().getConfigString("projectref","").equalsIgnoreCase("paiss")){
 	        %>
 		        <img src="_img/flags/enabel.png" height="20px" alt="Enabel Burundi"/>
 		        <a href="http://www.enabel.be" target="_new"><b>Enabel Burundi - PAISS</b></a>
-		        <BR/> Avenue de la Croix Rouge, BP 6708 - Bujumbura +257 222 775 48<br/>
+		        <BR/> KK 80 Street , BP 3377 - KIGALI +257 222 775 48<br/>
 	        <% 
         	}
         	else {
@@ -354,7 +354,7 @@ if(new java.util.Date().before(new SimpleDateFormat("dd/MM/yyyy").parse(be.openc
 		        <img src="_img/flags/pf.gif" height="16px" width="20px" alt="Post-Factum"/>
 		        <b>Post-Factum bvba</b>
 		        <BR/> Pastoriestraat 58, 3370 Boutersem Belgium -
-		        <a href="mailto:info@post-factum.be">info@post-factum.be</a>
+		        <a href="mailto:info@post-factum.be">info@rmh.rw</a>
 		    <%
          } %>
         </center>
